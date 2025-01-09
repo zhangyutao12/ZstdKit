@@ -14,7 +14,7 @@
 #define ZSTD_STATIC_LINKING_ONLY   // ZSTD_findDecompressedSize
 #include "zstd.h"
 
-int16_t LMZstdCompressionLevelDefault = 3 /* ZSTD_CLEVEL_DEFAULT */;
+int16_t LMZstdCompressionLevelDefault = 4 /* ZSTD_CLEVEL_DEFAULT */;
 
 CFDataRef LMCreateZstdCompressedData(const void* bytes, CFIndex length, int16_t compressionLevel)
 {
