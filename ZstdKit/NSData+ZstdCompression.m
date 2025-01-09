@@ -22,4 +22,14 @@
     return [LMZstdCompressor decompressedDataWithData:self];
 }
 
+- (NSData *)compressZstdWithdictionary:(NSData *)dictionary
+{
+    return [LMZstdCompressor compressedDataWithData:self dictionary:dictionary];
+}
+
+- (NSData *)decompressZstdWithdictionary:(NSData *)dictionary
+{
+    return [LMZstdCompressor decompressedDataWithData:self dictionary:dictionary];
+}
+
 @end

@@ -73,4 +73,63 @@
  */
 + (nullable NSData*)decompressedDataWithBytes:(const void* _Nonnull)bytes length:(NSUInteger)length;
 
+
++ (nullable NSData*)compressedDataWithData:(NSData* _Nonnull)input dictionary:(NSData* _Nonnull)dictionary;
+
+
+/**
+ Compresses the input bytes using the Zstd algorithm and a given dictionary.
+ Creates and returns a newly compressed NSData object.
+ Will return nil if the compression fails.
+
+ @param bytes Input bytes to be compressed.
+ @param length Input length (number of bytes).
+ @param dictionary The dictionary to use for compression.
+ @return A newly created NSData object containing the compressed data, or nil if compression fails.
+ */
++ (nullable NSData*)compressedDataWithBytes:(const void* _Nonnull)bytes
+                                     length:(NSUInteger)length
+                                 dictionary:(NSData* _Nonnull)dictionary;
+
+/**
+ Compresses the input bytes using the Zstd algorithm, a given dictionary, and the specified compression level.
+ Creates and returns a newly compressed NSData object.
+ Will return nil if the compression fails.
+
+ @param bytes Input bytes to be compressed.
+ @param length Input length (number of bytes).
+ @param dictionary The dictionary to use for compression.
+ @param compressionLevel The level of compression to apply (higher values typically yield better compression but slower speeds).
+ @return A newly created NSData object containing the compressed data, or nil if compression fails.
+ */
++ (nullable NSData*)compressedDataWithBytes:(const void* _Nonnull)bytes
+                                     length:(NSUInteger)length
+                                 dictionary:(NSData* _Nonnull)dictionary
+                          compressionLevel:(NSInteger)compressionLevel;
+
+/**
+ Decompresses the input data using the Zstd algorithm and a given dictionary.
+ Creates and returns a newly decompressed NSData object.
+ Will return nil if the decompression fails.
+
+ @param input The compressed NSData to decompress.
+ @param dictionary The dictionary to use for decompression.
+ @return A newly created NSData object containing the decompressed data, or nil if decompression fails.
+ */
++ (nullable NSData*)decompressedDataWithData:(NSData* _Nonnull)input
+                                  dictionary:(NSData* _Nonnull)dictionary;
+
+/**
+ Decompresses the input bytes using the Zstd algorithm and a given dictionary.
+ Creates and returns a newly decompressed NSData object.
+ Will return nil if the decompression fails.
+
+ @param bytes Input bytes to decompress.
+ @param length Input length (number of bytes).
+ @param dictionary The dictionary to use for decompression.
+ @return A newly created NSData object containing the decompressed data, or nil if decompression fails.
+ */
++ (nullable NSData*)decompressedDataWithBytes:(const void* _Nonnull)bytes
+                                       length:(NSUInteger)length
+                                   dictionary:(NSData* _Nonnull)dictionary;
 @end

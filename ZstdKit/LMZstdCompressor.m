@@ -9,6 +9,12 @@
 #import "LMZstdCompressor.h"
 
 #import "LMZstdCompression.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ZSTD_STATIC_LINKING_ONLY   // ZSTD_findDecompressedSize
+#include "zstd.h"
+
 
 @implementation LMZstdCompressor
 
@@ -37,6 +43,9 @@
     return CFBridgingRelease(LMCreateZstdCompressedData(bytes, length, compressionLevel));
 }
 
+
+
+
 + (NSData*)decompressedDataWithData:(NSData*)input
 {
     return [self decompressedDataWithBytes:input.bytes length:input.length];
@@ -46,5 +55,38 @@
 {
     return CFBridgingRelease(LMCreateZstdDecompressedData(bytes, length));
 }
+
++ (NSData*)compressedDataWithData:(NSData*)input dictionary:(NSData*)dictionary
+{
+    return [self compressedDataWithBytes:input.bytes length:input.length dictionary:dictionary compressionLevel:self.defaultCompressionLevel];
+}
+
++ (NSData*)compressedDataWithBytes:(const void*)bytes length:(NSUInteger)length dictionary:(NSData*)dictionary
+{
+    return [self compressedDataWithBytes:bytes length:length dictionary:dictionary compressionLevel:self.defaultCompressionLevel];
+}
+
++ (NSData*)compressedDataWithBytes:(const void*)bytes length:(NSUInteger)length dictionary:(NSData*)dictionary compressionLevel:(NSInteger)compressionLevel
+{
+    if (!dictionary) {
+        return nil; // 字典不能为空
+    }
+    return CFBridgingRelease(LMCreateZstdCompressedDataWithDictionary(bytes, length, dictionary.bytes, dictionary.length, compressionLevel));
+}
+
++ (NSData*)decompressedDataWithData:(NSData*)input dictionary:(NSData*)dictionary
+{
+    return [self decompressedDataWithBytes:input.bytes length:input.length dictionary:dictionary];
+}
+
++ (NSData*)decompressedDataWithBytes:(const void*)bytes length:(NSUInteger)length dictionary:(NSData*)dictionary
+{
+    if (!dictionary) {
+        return nil; // 字典不能为空
+    }
+    return CFBridgingRelease(LMCreateZstdDecompressedDataWithDictionary(bytes, length, dictionary.bytes, dictionary.length));
+}
+
+
 
 @end
